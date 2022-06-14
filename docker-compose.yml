@@ -1,0 +1,31 @@
+services:
+  sale:
+    build: .
+    env_file:
+      - .env
+    depends_on:
+      - db
+    ports:
+        - "80:8000"
+    networks:
+      - proxynet
+
+
+  db:
+    image: postgres:14.3-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - .env
+    networks:
+      - proxynet
+
+
+
+volumes:
+  postgres_data:
+
+networks:
+  proxynet:
+    name: sales_network
+
